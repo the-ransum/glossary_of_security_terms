@@ -1,5 +1,45 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-	<head></head>
-	<body></body>
+	<head>
+		<title>Glossary of Key Information Security Terms</title>
+		<link href="style.css" rel="stylesheet" media="all" type="text/css" title="main stylesheet">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	</head>
+	
+	<body id="manual-page">
+		<div id="page-header">
+			<p class="menu">
+				<a href="/">Home</a>
+			</p>
+			<p class="heading">Glossary of Information Security Terms</p>
+		</div>
+		
+		
+		<div class="page-content">
+			<div class="section">
+				<h2><a name="glossary" id="glossary">Glossary List</a></h2>
+				
+				<div class="warning">
+					<strong>Notice:</strong> Only terms and definitions compiled are from finalized publications. The repositories README also provides additional information regarding the sourcing of the documentation.
+				</div>
+				
+				
+				<table class="glossary-entries">
+					<thead>
+						<tr>
+							<th>Terms <input type="text" class="filter"></th>
+							<th>Definitions <input type="text" class="filter"></th>
+							<th>Sources <input type="text" class="filter"></th>
+						</tr>
+					</thead>
+					
+					<tbody id="glossary-entries"></tbody>
+				</table>
+			</div>		
+		</div>
+		
+		<script src="db.js"></script>		
+		<script src="script.js"></script>
+	</body>
 </html>
+
