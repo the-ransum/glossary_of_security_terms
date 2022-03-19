@@ -13,6 +13,10 @@ A simple git page that uses terms and definitions were compiled verbatim from pu
 
 - Take a look [the-ransum.github.io/glossary_of_security_terms](https://the-ransum.github.io/glossary_of_security_terms/).
 
+## To-do
+
+- [ ] Need to fix the filtering lag with having so many entries.
+
 
 ## License
 
