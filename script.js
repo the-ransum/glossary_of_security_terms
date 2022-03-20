@@ -1,27 +1,15 @@
 (function() {
 	'use strict';
 	
-	function delay(callback, ms) {
-		var timer = 0;
-		return function () {
-			var context = this,
-				args = arguments;
-			clearTimeout(timer);
-			timer = setTimeout(function () {
-				callback.apply(context, args);
-			}, ms || 0);
-		};
-	}
-
 	$('#glossary-entries').html(db.definitions.map(item => {
 		return $('<tr>').append([
 			$('<td>').text(item.term),
 			$('<td>').text(item.definition),
 			$('<td>').append(() => {
 				return (!item.sources.length) ? 
-					$('<span>').text('No Publications') : 
+					$('<span>').text('No sources') : 
 					$('<details>').html([
-						$('<summary>').text('Publications'),
+						$('<summary>').text('Sources'),
 						$('<ul>').append(item.sources.map(source => {
 							return $('<li>').append([
 								$('<a>').attr('target', '_blank').attr('href', source.url).text(source.name)
@@ -32,46 +20,41 @@
 		])
 	}));
 	
-	$('input.filter').on('keyup', function() {
-		$(this).attr('value', this.value.trim() || null);
-	});
+	function delay(cb, ms) {
+		let timer = 0;
 
-	$('input.filter').on('keyup', delay(function() {
-		let filters = $('input.filter[value]');
-		let rows = $('#glossary-entries>tr');
+		return function () {
+			let context = this;
+			let args = arguments;
+
+			clearTimeout(timer);
+
+			timer = setTimeout(function () {
+				cb.apply(context, args);
+			}, ms || 0);
+		};
+	}
+	
+	$('#table-search').on('keyup', function (e) {
+		let that = this;
 		
-		if(!!filters.length) {
-			rows.each(function() {
-				let tr = $(this);
-				let tds = tr.find('td').attr('match', null);
-				
-				tds.each(function() {
-					let td = $(this);
-					
-					let value = filters.eq(td.index()).val();
-					let text = td.text().trim().split(/\n{1,}/g).join(' ');
-					
-					let state = null;
-					if(!!value) {
-						let match = new RegExp(value, 'gi');
-						if(match.test(text)) {
-							state = true;
-						}
-					}
-					
-					td.attr('match', state);
-				});
-				
-				if(!tds.filter('[match]').length) {
-					tr.hide();
-				}
+		return delay(function() {
+			let value = that.value;
+			let target = $(that.ariaLabel);
+			
+			let rows = target.find('tr');
+			if(!value) {
+				return rows.filter('.hide').removeClass('hide');
+			}
+			
+			let matching = rows.filter(function() {
+				return this.innerText.replace(/[\r\n\t]{1,}/g, ' ').toLowerCase().match(value.toLowerCase()) !== null;
 			});
 			
-			rows.has('td[match]').show();
-		} else {
-			rows.show().find('td').attr('match', true);
-		}
-	}, 1700));
+			rows.not(matching).filter(':not(.hide)').addClass('hide');
+			matching.not('.hide').removeClass('hide');
+		}, 1700)();
+	});
 	
-	$('input.filter').trigger('keyup');
+	$('#table-search').trigger('keyup');
 })();

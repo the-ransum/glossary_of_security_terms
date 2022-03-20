@@ -980,6 +980,10 @@ p.figure dfn {
 
 
 /* SITE SPECIFIC STYLES */
+table {
+	width: 100%;
+}
+
 th:first-child {
     min-width: 220px; 
 }
@@ -996,3 +1000,19 @@ details>ul{
     margin: 0 0 0.75em 0;
     padding: 0 2em;
 }
+
+tr.hide {
+	display: none; 
+}
+
+div.table-filtering {
+    padding:0 0;
+}
+div.table-filtering > label {
+    display:block;
+    text-align: center;
+}
+div.table-filtering > label > input[type="text"] {
+	width: 75%;
+}
+
