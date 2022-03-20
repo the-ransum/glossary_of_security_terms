@@ -1005,6 +1005,10 @@ tr.hide {
 	display: none; 
 }
 
+th:last-child {
+    width: 10%;
+}
+
 div.table-filtering {
     padding:0 0;
 }
