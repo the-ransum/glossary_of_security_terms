@@ -1,6 +1,18 @@
 (function() {
 	'use strict';
 	
+	function delay(callback, ms) {
+		var timer = 0;
+		return function () {
+			var context = this,
+				args = arguments;
+			clearTimeout(timer);
+			timer = setTimeout(function () {
+				callback.apply(context, args);
+			}, ms || 0);
+		};
+	}
+
 	$('#glossary-entries').html(db.definitions.map(item => {
 		return $('<tr>').append([
 			$('<td>').text(item.term),
@@ -24,7 +36,7 @@
 		$(this).attr('value', this.value.trim() || null);
 	});
 
-	$('input.filter').on('keyup', function() {
+	$('input.filter').on('keyup', delay(function() {
 		let filters = $('input.filter[value]');
 		let rows = $('#glossary-entries>tr');
 		
@@ -59,7 +71,7 @@
 		} else {
 			rows.show().find('td').attr('match', true);
 		}
-	});
+	}, 1700));
 	
 	$('input.filter').trigger('keyup');
 })();
